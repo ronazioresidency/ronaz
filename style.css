@@ -1,0 +1,800 @@
+:root {
+    --royal-navy: #0A192F;
+    --gold: #D4AF37;
+    --white: #F4F4F4;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+body { background: var(--royal-navy); font-family: 'Montserrat', sans-serif; color: var(--white); overflow: hidden; text-align: center; }
+
+/* 1. LOADER STYLE */
+#loader-wrapper {
+    position: fixed; width: 100%; height: 100vh;
+    background: radial-gradient(circle at center, #112240 0%, #0A192F 100%);
+    z-index: 9999; display: flex; justify-content: center; align-items: center;
+    transition: opacity 1.2s ease-in-out;
+}
+.loader-content { display: flex; flex-direction: column; align-items: center; }
+.royal-title { 
+    font-family: 'Arvo', serif; font-size: clamp(2.5rem, 10vw, 5rem); 
+    letter-spacing: 15px; color: var(--gold); 
+    animation: tracking-in 1.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both; 
+}
+.divider-gold { width: 0; height: 1px; background: var(--gold); margin: 15px auto; animation: expand-line 1.2s 1.2s forwards; }
+.royal-subtitle { font-family: 'Great Vibes', cursive; font-size: clamp(1.5rem, 5vw, 2.5rem); opacity: 0; animation: fade-in 1.2s 1.8s forwards; }
+
+@keyframes tracking-in { 0% { letter-spacing: -0.5em; opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes expand-line { 100% { width: 280px; } }
+@keyframes fade-in { 100% { opacity: 1; } }
+
+/* 2. NAVIGATION (Fix for Lap View Overlap) */
+.royal-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 50px; position: fixed; width: 100%; top: 0; z-index: 1000;
+    background: rgba(10, 25, 47, 0.85); backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+.logo-wrapper { display: flex; flex-direction: column; text-align: left; line-height: 1.1; }
+.brand-main { font-family: 'Arvo', serif; font-size: 1.8rem; color: #fff; letter-spacing: 2px; }
+.brand-sub { font-size: 0.65rem; color: var(--gold); letter-spacing: 3px; text-transform: uppercase; }
+
+.nav-links { display: flex; list-style: none; align-items: center; gap: 20px; margin: 0; }
+.nav-links a { color: #fff; text-decoration: none; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; transition: 0.3s; }
+.btn-gold-nav { border: 1px solid var(--gold); padding: 6px 15px; color: var(--gold) !important; font-size: 0.65rem !important; }
+
+/* 3. HERO & 3D ENTRANCE FIX */
+.royal-hero { 
+    position: relative; height: 100vh; width: 100%; 
+    overflow: hidden; display: flex; flex-direction: column; 
+    align-items: center; justify-content: center; 
+}
+.video-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+.bg-video { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.45); }
+.overlay { position: absolute; top: 0; width: 100%; height: 100%; background: radial-gradient(circle, transparent, var(--royal-navy)); }
+
+.hero-text-area { 
+    perspective: 1500px; z-index: 5; width: 100%; 
+    padding-top: 80px; /* Nav bar space for Lap view */
+}
+
+/* 3D Entrance logic */
+.entrance-wrapper {
+    opacity: 0;
+    transform: translateZ(-800px) translateY(50px);
+    transition: all 2.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+body.loaded .entrance-wrapper {
+    opacity: 1;
+    transform: translateZ(0) translateY(0);
+}
+
+.main-heading { 
+    font-family: 'Arvo', serif; 
+    font-size: clamp(2.2rem, 9vw, 6.5rem); /* Mobile-la "Ultimate" fix aaga optimized */
+    letter-spacing: 8px; text-transform: uppercase; 
+    line-height: 1.1; margin: 15px 0;
+}
+.location-tag { 
+    display: inline-block; letter-spacing: 8px; font-size: 0.75rem; 
+    color: var(--gold); border-top: 1px solid rgba(255,255,255,0.2); 
+    padding-top: 10px; margin-top: 10px;
+}
+
+/* 4. BUTTONS & STATS */
+.hero-btns { display: flex; justify-content: center; gap: 20px; margin-top: 35px; }
+.btn-reserve { background: var(--gold); color: var(--royal-navy) !important; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; text-transform: uppercase; font-size: 0.75rem; transition: 0.4s; }
+.btn-story { color: #fff; text-decoration: none; border-bottom: 1px solid #fff; font-size: 0.85rem; padding-bottom: 3px; }
+
+.hero-stats-container { position: absolute; bottom: 30px; width: 100%; z-index: 10; }
+.stats-row { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; margin: 0 10%; }
+.stat-item h3 { color: var(--gold); font-family: 'Arvo', serif; font-size: clamp(1.2rem, 4vw, 1.8rem); }
+.stat-item p { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.7); }
+
+/* 5. MOBILE OVERLAP & RESPONSIVE FIXES */
+@media (max-width: 768px) {
+    .royal-nav { flex-direction: column; padding: 10px; gap: 8px; }
+    .nav-links { gap: 10px; flex-wrap: wrap; justify-content: center; }
+    .nav-links a { font-size: 0.6rem; }
+    .brand-main { font-size: 1.4rem; }
+    
+    .hero-text-area { padding-top: 100px; } /* More space for mobile nav */
+    .main-heading { letter-spacing: 4px; line-height: 1.2; }
+    
+    .hero-btns { flex-direction: column; align-items: center; gap: 15px; }
+    .btn-reserve { width: 85%; }
+
+    .hero-stats-container { position: relative; margin-top: 40px; bottom: 0; background: rgba(10, 25, 47, 0.5); padding: 20px 0; }
+}
+
+.loader-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+/* 1. BUTTON SHAKE ANIMATION */
+@keyframes ronazio-shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-3px) rotate(-1deg); }
+    50% { transform: translateX(3px) rotate(1deg); }
+    75% { transform: translateX(-3px) rotate(-1deg); }
+    100% { transform: translateX(0); }
+}
+
+/* 2. WATER SPLASH (RIPPLE) ANIMATION */
+@keyframes ronazio-splash {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0.5;
+    }
+    100% {
+        width: 250px;
+        height: 250px;
+        opacity: 0;
+    }
+}
+
+.hero-btns a {
+    position: relative;
+    overflow: hidden; /* Splash button-ku veliya theriyaama irukka */
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+/* HOVER LOGIC */
+.hero-btns a:hover {
+    animation: ronazio-shake 0.5s ease-in-out; /* Mouse hover panna shake aagum */
+}
+
+/* WATER SPLASH EFFECT (Pseudo-element) */
+.hero-btns a::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.4); /* Water color (white ripple) */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.hero-btns a:hover::after {
+    animation: ronazio-splash 0.8s ease-out; /* Hover pannumbodhu splash aagum */
+}
+
+/* Specific fix for Reserve Button (Gold Background) */
+.btn-reserve:hover {
+    background-color: #fff; /* Splash innum clear-ah theriya white background */
+    color: var(--royal-navy) !important;
+}
+
+
+/* DEDICATED ABOUT SECTION STYLES */
+.ronazio-custom-about {
+    position: relative;
+    background: #0D1E36; /* Deep Sea Blue */
+    padding: 150px 0 100px;
+    overflow: hidden;
+}
+
+/* 3D WAVE ANIMATION LOGIC */
+.ronazio-ocean-wrapper {
+    height: 160px;
+    width: 100%;
+    position: absolute;
+    top: -155px; /* Hero section overlap */
+    left: 0;
+    overflow: hidden;
+}
+
+.ronazio-wave-layer {
+    background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg') repeat-x;
+    position: absolute;
+    width: 6400px;
+    height: 100%;
+    animation: ronazio-wave-drift 15s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+    transform: translate3d(0, 0, 0);
+}
+
+.ronazio-wave-back { top: 0; opacity: 0.2; animation-duration: 12s; }
+.ronazio-wave-mid { top: 15px; opacity: 0.4; animation-duration: 18s; animation-delay: -2s; }
+.ronazio-wave-front { top: 30px; opacity: 1; animation-duration: 25s; }
+
+@keyframes ronazio-wave-drift {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-1600px); }
+}
+
+/* IMAGE STACK DESIGN */
+.ronazio-visual-stack {
+    position: relative;
+    height: 480px;
+    display: flex;
+    justify-content: center;
+}
+
+.ronazio-card {
+    position: absolute;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    transition: transform 0.6s ease;
+}
+
+.ronazio-card img { width: 100%; display: block; object-fit: cover; }
+
+.ronazio-card-main {
+    width: 80%;
+    z-index: 2;
+    top: 0;
+    left: 0;
+}
+
+.ronazio-card-sub {
+    width: 65%;
+    z-index: 1;
+    bottom: 20px;
+    right: 0;
+    border: 6px solid #0D1E36;
+}
+
+/* TEXT CONTENT STYLES */
+.ronazio-label {
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.ronazio-title {
+    font-family: 'Arvo', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    color: var(--gold);
+    margin-bottom: 30px;
+}
+
+.ronazio-title span { color: #fff; }
+
+.ronazio-paragraph {
+    color: #cbd5e0;
+    line-height: 1.9;
+    font-size: 1.1rem;
+    max-width: 550px;
+    margin-bottom: 40px;
+}
+
+.ronazio-perk-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.ronazio-gold-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.ronazio-perk-item p { margin: 0; color: #fff; font-size: 0.95rem; font-weight: 500; }
+
+/* MOBILE RESPONSIVE UPDATES */
+@media (max-width: 768px) {
+    .ronazio-custom-about { padding: 100px 20px 60px; text-align: center; }
+    
+    .ronazio-ocean-wrapper { height: 80px; top: -75px; }
+    
+    .ronazio-visual-stack { height: 350px; margin-bottom: 50px; }
+    
+    .ronazio-card-main { width: 85%; }
+    .ronazio-card-sub { width: 70%; bottom: 0; }
+    
+    .ronazio-text-payload { display: flex; flex-direction: column; align-items: center; }
+    .ronazio-paragraph { font-size: 1rem; }
+    
+    .ronazio-perks { text-align: left; display: inline-block; }
+}
+
+
+/* ROOMS UNIQUE SECTION */
+.ronazio-rooms-unique { background: #0A192F; padding: 100px 0; position: relative; overflow: hidden; }
+
+.room-unique-card { 
+    background: #0D1E36; border-radius: 20px; overflow: hidden; 
+    border: 1px solid rgba(212, 175, 55, 0.15); transition: 0.5s; 
+}
+
+.room-unique-slider, .modal-image-slider-area { 
+    width: 100%; height: 350px; overflow: hidden; position: relative; 
+}
+
+.room-unique-slides, .modal-slides-box { 
+    display: flex; width: 300%; height: 100%; animation: autoSlideUnique 10s infinite; 
+}
+
+.room-unique-slides img, .modal-slides-box img { width: 33.333%; height: 100%; object-fit: cover; }
+
+@keyframes autoSlideUnique {
+    0%, 25% { transform: translateX(0); }
+    33%, 58% { transform: translateX(-33.333%); }
+    66%, 91% { transform: translateX(-66.666%); }
+}
+
+/* SPLASH CLICK EFFECT FOR ALL CLICKS */
+.splash-trigger { position: relative; overflow: hidden; cursor: pointer; transition: 0.3s; z-index: 1; }
+.splash-trigger::after {
+    content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0;
+    background: rgba(255, 255, 255, 0.4); border-radius: 50%; transform: translate(-50%, -50%);
+    transition: width 0.6s ease-out, height 0.6s ease-out; z-index: -1;
+}
+.splash-trigger:active::after { width: 450px; height: 450px; opacity: 0; }
+
+/* MODAL & WAVE LOGIC */
+.modal-unique-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 3000; display: none; justify-content: center; align-items: center;
+}
+
+.wave-wrap-element {
+    position: absolute; width: 100%; height: 100%; background: #0D1E36;
+    clip-path: circle(0% at 50% 50%); transition: 1.2s cubic-bezier(0.85, 0, 0.15, 1);
+}
+
+.modal-unique-overlay.active .wave-wrap-element { clip-path: circle(150% at 50% 50%); }
+
+.modal-unique-card {
+    position: relative; width: 95%; max-width: 1100px; background: #112240;
+    border-radius: 30px; overflow: hidden; opacity: 0; transform: scale(0.8) translateY(50px);
+    transition: 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+}
+
+.modal-unique-overlay.active .modal-unique-card { opacity: 1; transform: scale(1) translateY(0); }
+
+/* GOLD GLOW CLOSE ICON */
+.rich-close-wrapper { 
+    position: absolute; top: 30px; right: 30px; z-index: 3100; transition: 0.5s; 
+}
+
+.gold-glow-circle {
+    width: 60px; height: 60px; background: #0D1E36; border: 2px solid var(--gold);
+    border-radius: 50%; display: flex; justify-content: center; align-items: center;
+    box-shadow: 0 0 15px var(--gold); transition: 0.4s;
+}
+
+.gold-glow-circle span { color: var(--gold); font-size: 40px; line-height: 1; font-weight: 300; }
+.gold-glow-circle:hover { transform: rotate(90deg) scale(1.1); box-shadow: 0 0 30px var(--gold); }
+
+/* ROYAL FORM STYLING */
+.modal-form-container { padding: 40px; background: linear-gradient(145deg, #112240, #0A192F); }
+.form-header h3 { color: var(--gold); font-family: 'Arvo', serif; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.gold-divider { width: 60px; height: 2px; background: var(--gold); margin-bottom: 30px; }
+
+.input-group-royal { margin-bottom: 15px; }
+.input-group-royal label { display: block; color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+.input-group-royal input {
+    width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 12px 15px; color: #fff; border-radius: 8px; transition: 0.3s;
+}
+.input-group-royal input:focus { outline: none; border-color: var(--gold); background: rgba(255, 255, 255, 0.1); box-shadow: 0 0 10px rgba(212, 175, 55, 0.1); }
+
+.btn-confirm-unique {
+    width: 100%; background: var(--gold); color: #0A192F; border: none;
+    padding: 18px; border-radius: 12px; font-weight: 800; font-size: 1rem;
+    text-transform: uppercase; letter-spacing: 2px; margin-top: 15px;
+    box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 992px) {
+    .modal-unique-card { height: 90vh; overflow-y: auto; }
+    .modal-image-slider-area { height: 250px; }
+    .modal-form-container { padding: 25px; }
+    .rich-close-wrapper { top: 15px; right: 15px; }
+    .gold-glow-circle { width: 45px; height: 45px; }
+    .gold-glow-circle span { font-size: 30px; }
+}
+/* 1. ROYAL BOOK NOW BUTTON BASE STYLE */
+.btn-royal-trigger {
+    background: var(--gold); /* */
+    color: #0A192F; /* */
+    border: none; /* */
+    padding: 12px 35px; /* */
+    border-radius: 50px; /* */
+    font-weight: 700; /* */
+    text-transform: uppercase; /* */
+    letter-spacing: 1px; /* */
+    font-size: 0.8rem; /* */
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* 2. HOVER EFFECTS (Glow & Lift) */
+.btn-royal-trigger:hover {
+    transform: translateY(-5px);
+    background: #ffffff; /* Hover-la white-ah maarum */
+    box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4); /* Gold glow */
+    color: #0A192F !important;
+}
+
+/* 3. WATER SPLASH (RIPPLE) EFFECT */
+.splash-trigger::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.4); /* White splash color */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    transition: width 0.6s ease-out, height 0.6s ease-out;
+}
+
+/* Click panna splash expand aagum */
+.splash-trigger:active::after {
+    width: 400px;
+    height: 400px;
+    opacity: 0;
+    transition: 0s; /* Instant reset for next click */
+}
+
+/* 4. BUTTON SHAKE ANIMATION ON HOVER */
+.btn-royal-trigger:hover {
+    animation: splashShake 0.5s ease-in-out;
+}
+
+@keyframes splashShake {
+    0%, 100% { transform: translateY(-5px) rotate(0deg); }
+    25% { transform: translateY(-5px) rotate(-1deg); }
+    75% { transform: translateY(-5px) rotate(1deg); }
+}
+
+/* 5. MOBILE RESPONSIVE ADJUSTMENT */
+@media (max-width: 768px) {
+    .btn-royal-trigger {
+        width: 85%; /* Mobile-la button size adjustment */
+        padding: 10px 25px;
+        font-size: 0.75rem;
+    }
+}
+
+/* GALLERY GRID STYLES */
+.ronazio-gallery-section { background: #0A192F; padding: 100px 0; }
+
+.gallery-item {
+    perspective: 1000px;
+    height: 280px;
+    cursor: pointer;
+}
+
+.gallery-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-style: preserve-3d;
+}
+
+/* Flip Logic - Back side-layum adhae photo */
+.gallery-item:hover .gallery-card-inner {
+    transform: rotateY(180deg);
+}
+
+.gallery-front, .gallery-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.gallery-front img, .gallery-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-back {
+    transform: rotateY(180deg);
+    filter: brightness(1.2) contrast(1.1); /* Light difference for flip feel */
+}
+
+/* MODAL NAVIGATION ARROWS */
+.gallery-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10, 25, 47, 0.8);
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 24px;
+    z-index: 3200;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+}
+
+.gallery-nav-btn:hover {
+    background: var(--gold);
+    color: #0A192F;
+    box-shadow: 0 0 30px var(--gold);
+}
+
+.prev-btn { left: 30px; }
+.next-btn { right: 30px; }
+
+/* MODAL CONTENT */
+.gallery-modal-content {
+    position: relative;
+    z-index: 3100;
+    max-width: 80%;
+    transition: 0.5s;
+}
+
+.gallery-modal-content img {
+    width: 100%;
+    border-radius: 15px;
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+    .gallery-item { height: 200px; }
+    .gallery-nav-btn { width: 45px; height: 45px; font-size: 18px; }
+    .prev-btn { left: 10px; }
+    .next-btn { right: 10px; }
+    .gallery-modal-content { max-width: 95%; }
+}
+/* CONTACT MINIMALIST ELEGANCE */
+.ronazio-contact-minimal {
+    background: #0A192F;
+    padding: 120px 0;
+    position: relative;
+}
+
+.contact-desc {
+    color: #b0b0b0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin: 25px 0 40px;
+    max-width: 450px;
+}
+
+/* INFO LIST STYLES */
+.contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.c-info-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: 0.3s;
+}
+
+.c-info-item:hover { transform: translateX(10px); }
+
+.c-icon {
+    width: 50px; height: 50px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 1.3rem;
+}
+
+.c-info-item h5 { color: var(--gold); font-size: 1rem; margin: 0; font-family: 'Arvo', serif; }
+.c-info-item p { color: #fff; margin: 0; font-size: 0.9rem; opacity: 0.8; }
+
+/* GLASS FORM DESIGN */
+.ronazio-form-glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+}
+
+.floating-group input, 
+.floating-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding: 15px 0;
+    color: #fff;
+    font-size: 1rem;
+    transition: 0.4s;
+}
+
+.floating-group input:focus, 
+.floating-group textarea:focus {
+    outline: none;
+    border-bottom-color: var(--gold);
+}
+
+/* MOBILE OPTIMIZATION */
+@media (max-width: 768px) {
+    .ronazio-contact-minimal { padding: 80px 20px; text-align: center; }
+    .contact-desc { margin: 20px auto 40px; }
+    .contact-info-list { align-items: center; }
+    .ronazio-form-glass { padding: 30px 20px; border-radius: 20px; }
+}
+
+/* FOOTER BASE */
+.ronazio-footer-slim {
+    background: #0D1E36;
+    padding: 25px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: #fff;
+    position: relative;
+}
+
+.footer-slim-layout {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 50px;
+    justify-content: flex-end;
+}
+
+/* LEFT SIDE ALIGNMENT */
+.footer-left-side {
+    margin-left: auto; 
+    margin-right: 0;/* Throws it to the left */
+    z-index: 2;
+}
+
+.created-inline-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.created-text {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* CENTER COPYRIGHT */
+.footer-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    z-index: 1;
+}
+
+/* MATRIX BRANDING COLORS & GLOW */
+.matrix-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none !important;
+    position: relative;
+}
+
+.m-red { color: #FF0000; font-weight: 700; transition: 0.3s; }
+.b-white { color: #FFFFFF; font-weight: 700; transition: 0.3s; }
+
+.matrix-brand:hover .m-red {
+    text-shadow: 0 0 15px #FF0000, 0 0 30px rgba(255, 0, 0, 0.5);
+}
+.matrix-brand:hover .b-white {
+    text-shadow: 0 0 15px #FFFFFF, 0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+/* LOGO ZOOM FIX */
+.matrix-logo-circle-zoom {
+    width: 35px; height: 35px;
+    background: #fff; border-radius: 50%;
+    overflow: hidden; display: flex;
+    justify-content: center; align-items: center;
+}
+
+.matrix-logo-circle-zoom img {
+    width: 100%; height: 100%;
+    object-fit: cover; transform: scale(1.2);
+}
+
+/* GLITTER PARTICLES */
+#glitter-container {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+}
+
+.star-dust {
+    position: absolute;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    animation: dust-fly 1s ease-out forwards;
+}
+
+@keyframes dust-fly {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
+}
+
+@media (max-width: 992px) {
+    .footer-slim-layout { flex-direction: column; gap: 15px; }
+    .footer-center { position: static; transform: none; }
+    .footer-left-side { margin-right: 0; }
+}
+
+/* MOBILE VIEW OPTIMIZATION */
+@media (max-width: 992px) {
+    .ronazio-footer-slim {
+        padding: 15px 0; /* Mobile-la innum slim-ah irukka */
+    }
+
+    .footer-slim-layout {
+        display: flex;
+        flex-direction: row !important; /* Mobile-layum column-ah maaraama orae line-la irukka */
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 15px;
+    }
+
+    .footer-center {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.7rem; /* Space-kaaga font size kuraikkiraen */
+    }
+
+    .footer-right-corner {
+        margin-left: auto;
+        order: 2; /* Right corner-layae lock aagum */
+    }
+
+    .created-text {
+        font-size: 0.65rem; /* Mobile-la romba slim-ah theriya */
+        margin-right: 5px;
+    }
+
+    .matrix-logo-circle-zoom {
+        width: 28px; /* Mobile-la kachidhamaana size */
+        height: 28px;
+    }
+
+    .matrix-text {
+        font-size: 0.85rem;
+    }
+}
+
+/* Common fix for all views */
+.footer-right-corner {
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.created-by-wrapper {
+    display: flex;
+    align-items: center;
+    white-space: nowrap; /* Vertical-ah stack aagaama thadukkum */
+}
