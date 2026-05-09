@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // WhatsApp Form Submission
     document.getElementById("whatsapp-form-unique").onsubmit = function(e) {
         e.preventDefault();
-        const phone = "919876543210"; // REPLACE WITH YOUR NUMBER
+        const phone = "919597562331"; // REPLACE WITH YOUR NUMBER
         const msg = `*Ronazio Booking Enquiry*%0A` +
                     `*Room:* ${mName.innerText}%0A` +
                     `*Guest:* ${document.getElementById("g-name").value}%0A` +
@@ -112,23 +112,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     let currentIndex = 0;
     const photoIDs = [
-        "1507525428034-b723cf961d3e", "1519046904884-53103b34b206", 
-        "1506929111035-af5217465c2a", "1501785888041-af3ef285b470", 
-        "1471922691239-b8d3469986bd", "1473410848775-81d2060ce97a",
-        "1566073771259-6a8506099945", "1520250497591-112f2f40a3f4",
-        "1540518614846-7eded433c457", "1595575508110-548c51a97b62",
-        "1631049307264-da0ec9d70304", "1590490359683-658d3d23f972",
-        "1566195992011-5f6b21e539aa", "1507525428034-b723cf961d3e",
-        "1499793983690-e29da59ef1c2", "1468413253725-0d5181091126",
-        "1437719417032-8595fd9e9dc6", "1505118380757-91f5f45d2927",
-        "1515238152791-8216bfdf89a7", "1446730853965-6239b7a6867d"
+        "Ext.jpeg", "Exter.jpeg", "Bal.jpeg", "Balco.jpeg",
+        "Exterior.jpeg", "Exteriorr.jpeg", "Family.jpeg","SeaV4.jpeg", "Family2.jpeg",
+        "Balcony FAMLY.jpeg", "Exteriorrr.jpeg", "Family3.jpeg",
+        "FamilyBalcony.jpeg", "Sea.jpeg",
+        "D With B.jpeg", "D1.jpeg", "Deluxe1.jpeg", "Deluxe3.jpeg",
+        "Exterior1.jpeg", "Reception.jpeg"
     ];
 
-    const fullImages = photoIDs.map(id => `https://images.unsplash.com/photo-${id}?w=1200&q=90`);
-
+   const fullImages = photoIDs.map(name => `images/${name}`);
     // Load Grid
     photoIDs.forEach((id, index) => {
-        const thumbUrl = `https://images.unsplash.com/photo-${id}?w=600&q=80`;
+        const thumbUrl = `images/${id}`;
         const col = document.createElement('div');
         col.className = 'col-6 col-md-4 col-lg-3 gallery-item splash-trigger';
         
@@ -193,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const subject = document.getElementById("c-subject").value;
             const message = document.getElementById("c-message").value;
             
-            const phone = "919876543210"; // REPLACE WITH YOUR NUMBER
+            const phone = "919597562331"; // REPLACE WITH YOUR NUMBER
 
             // Formatting the WhatsApp Message
             const whatsappMsg = `*New Contact Enquiry - Ronazio Residency*%0A%0A` +
